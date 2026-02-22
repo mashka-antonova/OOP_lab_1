@@ -1,6 +1,5 @@
 #include "console_io.h"
 
-#include "constants.h"
 
 ConsoleIo::ConsoleIo(std::istream& input, std::ostream& output) : m_input(input), m_output(output){}
 
@@ -10,10 +9,6 @@ int ConsoleIo::readInt(const std::string& promt) {
 
 double ConsoleIo::readDouble(const std::string& promt) {
     return readNumericValue<double>(promt, "please enter a floating number");
-}
-
-MenuAction ConsoleIo::readMenuAction(const std::string& promt) {
-    return readNumericValue<MenuAction>(promt, "please enter action 1-8");
 }
 
 std::string ConsoleIo::readNonEmptyString(const std::string& promt) {

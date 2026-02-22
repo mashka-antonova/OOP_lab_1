@@ -1,5 +1,6 @@
 #include "application.h"
 
+#include "constants.h"
 #include <memory>
 #include <iomanip>
 
@@ -10,33 +11,33 @@ int Application::run() {
     bool running = true;
     while (running){
         printMenu();
-        const MenuAction action = m_console.readMenuAction("Enter menu item: ");
+        const int action = m_console.readInt("Enter menu item: ");
         exitCode = handleMenuAction(action);
         running = (exitCode == 0);
     }
     return exitCode;
 }
 
-int Application::handleMenuAction(MenuAction action) {
+int Application::handleMenuAction(int action) {
     int exitCode = 0;
     try {
-        if (action == MenuAction::AddShape){
+        if (action == AddShape){
             m_shapeManager.addShape(creatShape());
             m_console.printLine("Shape added");
-        } else if (action == MenuAction::ListParameters) {
+        } else if (action == ListParameters) {
             printParameterList();
-        } else if (action == MenuAction::ListPerimeters) {
+        } else if (action == ListPerimeters) {
             printPerimeterList();
-        } else if (action == MenuAction::SumPerimeters) {
+        } else if (action == SumPerimeters) {
             printTotalPerimeter();
-        } else if (action == MenuAction::SortByPerimeters) {
+        } else if (action == SortByPerimeters) {
             m_shapeManager.sortByPerimeterAscending();
             m_console.printLine("Sorting completed");
-        } else if (action == MenuAction::DeleteByIndex) {
+        } else if (action == DeleteByIndex) {
             deleteShapeByIndex();
-        } else if (action == MenuAction::DeleteByPerimeter) {
+        } else if (action == DeleteByPerimeter) {
             deleteShapeByPerimeter();
-        } else if (action == MenuAction::Exit) {
+        } else if (action == Exit) {
             m_console.printLine("Exiting program");
             exitCode = 1;
         } else {
@@ -108,7 +109,7 @@ void Application::printTotalPerimeter(){
 void Application::deleteShapeByIndex(){
     const int index = m_console.readInt("Enter shape number to delete:");
     const bool removed = m_shapeManager.removeByIndex(index);
-    m_console.printLine(removed ? "Shape deleted." : "Error: invalid index.");
+    m_console.printLine(removed ? "Shape deleted" : "Error: invalid index");
 }
 
 void Application::deleteShapeByPerimeter(){

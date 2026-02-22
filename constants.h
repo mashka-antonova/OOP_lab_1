@@ -1,7 +1,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-enum class MenuAction: int {
+enum MenuAction{
     Exit,
     AddShape,
     ListParameters,

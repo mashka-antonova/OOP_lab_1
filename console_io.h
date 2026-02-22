@@ -3,7 +3,6 @@
 
 #include <istream>
 #include <sstream>
-#include <constants.h>
 
 #include "shapes.h"
 
@@ -13,7 +12,6 @@ public:
 
     int readInt(const std::string& promt);
     double readDouble(const std::string& promt);
-    MenuAction readMenuAction(const std::string& promt);
 
     std::string readNonEmptyString(const std::string& promt);
     Point readPoint(const std::string& promt);

@@ -3,7 +3,7 @@
 
 #include "console_io.h"
 #include "shapes_manager.h"
-#include "constants.h"
+
 
 class Application{
 public:
@@ -11,7 +11,7 @@ public:
     int run();
 
 private:
-    int handleMenuAction(MenuAction action);
+    int handleMenuAction(int action);
     void printMenu();
     ShapePtr creatShape();
     void printParameterList();

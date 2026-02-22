@@ -7,8 +7,8 @@
 #include <algorithm>
 
 
-void ShapeManager::addShape(const ShapePtr& shape){
-    m_shapes.push_back(shape);
+void ShapeManager::addShape(ShapePtr shape){
+    m_shapes.push_back(std::move(shape));
 }
 
 std::vector<std::string> ShapeManager::buildParameterLines() const {

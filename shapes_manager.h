@@ -5,7 +5,7 @@
 
 class ShapeManager{
 public:
-    void addShape(const ShapePtr& shape);
+    void addShape(ShapePtr shape);
     std::vector<std::string> buildParameterLines() const;
     std::vector<std::string> buildPerimeterLines() const;
     double calclateTotalPerimeter() const;
