@@ -1,8 +1,12 @@
 #include "application.h"
 
+#include "application.h"
+
 #include "constants.h"
-#include <memory>
 #include <iomanip>
+#include <memory>
+#include <sstream>
+#include <stdexcept>
 
 Application::Application(ConsoleIo& console) : m_console(console){}
 

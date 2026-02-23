@@ -4,8 +4,9 @@
 
 #include <cctype>
 #include <cmath>
-#include <sstream>
 #include <iomanip>
+#include <sstream>
+#include <stdexcept>
 
 //вспомогательные функции
 
