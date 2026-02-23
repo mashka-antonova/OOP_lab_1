@@ -1,5 +1,6 @@
 #include "console_io.h"
 
+#include <algorithm>
 #include <cctype>
 
 
@@ -18,10 +19,16 @@ std::string ConsoleIo::readNonEmptyString(const std::string& promt) {
     bool valid = false;
     while (!valid){
         printLine(promt);
-        std::getline(m_input, value);
-        valid = !value.empty();
+        if (!std::getline(m_input, value)) {
+            throw std::runtime_error("input stream closed");
+        }
+
+        const bool blankOnly = std::all_of(value.begin(), value.end(), [](unsigned char symbol) {
+            return std::isspace(symbol) != 0;
+        });
+        valid = !value.empty() && !blankOnly;
         if (!valid)
-            printLine("string must not be empty");
+            printLine("string must not be empty or blank");
     }
     return value;
 }
@@ -29,8 +36,8 @@ std::string ConsoleIo::readNonEmptyString(const std::string& promt) {
 Point ConsoleIo::readPoint(const std::string& promt){
     printLine(promt);
     Point point;
-    point.x = readDouble(" x:");
-    point.y = readDouble(" y:");
+    point.x = readDouble("x:");
+    point.y = readDouble("y:");
     return point;
 }
 

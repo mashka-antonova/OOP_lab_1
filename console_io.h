@@ -21,9 +21,10 @@ public:
     void printLines(const std::vector<std::string>& lines);
 
 private:
+    //
     template <typename NumberType>
     NumberType readNumericValue(const std::string& promt, const std::string& errorMessage) {
-        NumberType value;
+        NumberType value{};
         bool parsed = false;
         while(!parsed) {
             printLine(promt);
@@ -32,9 +33,10 @@ private:
                 throw std::runtime_error("input stream closed");
             }
             std::istringstream stream(line);
-            stream >> value;
-            stream >> std::ws;
-            parsed = stream && stream.eof();
+            if (stream >> value) {
+                char extraSymbol;
+                parsed = !(stream >> extraSymbol);
+            }
             if (!parsed)
                 printLine(errorMessage);
         }

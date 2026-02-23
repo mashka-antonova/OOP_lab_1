@@ -8,14 +8,22 @@
 
 Application::Application(ConsoleIo& console) : m_console(console){}
 
+
+//
 int Application::run() {
     int exitCode = 0;
     bool running = true;
     while (running){
-        printMenu();
-        const int action = m_console.readInt("Enter menu item: ");
-        exitCode = handleMenuAction(action);
-        running = (exitCode == 0);
+        try {
+            printMenu();
+            const int action = m_console.readInt("Enter menu item: ");
+            exitCode = handleMenuAction(action);
+            running = (exitCode == 0);
+        } catch (const std::exception& exception) {
+            m_console.printLine(std::string("Error: ") + exception.what());
+            exitCode = 1;
+            running = false;
+        }
     }
     return exitCode;
 }
