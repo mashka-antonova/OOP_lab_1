@@ -13,7 +13,7 @@ public:
 private:
     int handleMenuAction(int action);
     void printMenu();
-    ShapePtr creatShape();
+    ShapePtr createShape();
     void printParameterList();
     void printPerimeterList();
     void printTotalPerimeter();

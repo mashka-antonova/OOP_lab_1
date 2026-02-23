@@ -47,13 +47,13 @@ void ShapeManager::sortByPerimeterAscending() {
 }
 
 bool ShapeManager::removeByIndex(int oneBasedIndex){
-    bool IsRemoved = false;
+    bool isRemoved = false;
     int index = oneBasedIndex - 1;
     if (index >= 0 && index < static_cast<int>(m_shapes.size())){
         m_shapes.erase(m_shapes.begin() + index);
-        IsRemoved = true;
+        isRemoved = true;
     }
-    return IsRemoved;
+    return isRemoved;
 }
 
 int ShapeManager::removeWithPerimeterGreaterThan(double threshold) {

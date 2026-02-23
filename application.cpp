@@ -18,7 +18,7 @@ int Application::run() {
             printMenu();
             const int action = m_console.readInt("Enter menu item: ");
             exitCode = handleMenuAction(action);
-            running = (exitCode == 0);
+            running = (action != Exit);
         } catch (const std::exception& exception) {
             m_console.printLine(std::string("Error: ") + exception.what());
             exitCode = 1;
@@ -32,7 +32,7 @@ int Application::handleMenuAction(int action) {
     int exitCode = 0;
     try {
         if (action == AddShape){
-            m_shapeManager.addShape(creatShape());
+            m_shapeManager.addShape(createShape());
             m_console.printLine("Shape added");
         } else if (action == ListParameters) {
             printParameterList();
@@ -49,7 +49,7 @@ int Application::handleMenuAction(int action) {
             deleteShapeByPerimeter();
         } else if (action == Exit) {
             m_console.printLine("Exiting program");
-            exitCode = 1;
+            exitCode = 0;
         } else {
             m_console.printLine("Unknown menu item");
         }
@@ -71,7 +71,7 @@ void Application::printMenu() {
     m_console.printLine("0. Exit");
 }
 
-ShapePtr Application::creatShape() {
+ShapePtr Application::createShape() {
     m_console.printLine("Select shape type:");
     m_console.printLine("1. Circle");
     m_console.printLine("2. Rectangle");
@@ -81,15 +81,18 @@ ShapePtr Application::creatShape() {
     const std::string shapeName = m_console.readNonEmptyString("Enter shape custom name:");
     ShapePtr shape;
     if (shapeType == shapeCircle) {
-        shape = std::make_unique<Circle>(shapeName, m_console.readPoint("Enter center coordinates:"),
-                                         m_console.readDouble("Enter radius:"));
+        const Point center = m_console.readPoint("Enter center coordinates:");
+        const double radius = m_console.readDouble("Enter radius:");
+        shape = std::make_unique<Circle>(shapeName, center, radius);
     } else if (shapeType == shapeRectangle) {
-        shape = std::make_unique<Rectangle>(shapeName, m_console.readPoint("Enter top-left corner coordinates:"),
-                                            m_console.readPoint("Enter bottom-right corner coordinates:"));
+        const Point leftTop = m_console.readPoint("Enter top-left corner coordinates:");
+        const Point rightBottom = m_console.readPoint("Enter bottom-right corner coordinates:");
+        shape = std::make_unique<Rectangle>(shapeName, leftTop, rightBottom);
     } else if (shapeType == shapeTriangle) {
-        shape = std::make_unique<Triangle>(shapeName, m_console.readPoint("Enter first coordinates:"),
-                                           m_console.readPoint("Enter second coordinates:"),
-                                           m_console.readPoint("Enter third coordinates:"));
+        const Point first = m_console.readPoint("Enter first coordinates:");
+        const Point second = m_console.readPoint("Enter second coordinates:");
+        const Point third = m_console.readPoint("Enter third coordinates:");
+        shape = std::make_unique<Triangle>(shapeName, first, second, third);
     } else {
         throw std::invalid_argument("unknown shape type");
     }
