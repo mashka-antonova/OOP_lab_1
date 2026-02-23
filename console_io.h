@@ -2,6 +2,7 @@
 #define CONSOLE_IO_H
 
 #include <istream>
+#include <stdexcept>
 #include <sstream>
 
 #include "shapes.h"
@@ -27,7 +28,9 @@ private:
         while(!parsed) {
             printLine(promt);
             std::string line;
-            std::getline(m_input, line);
+            if (!std::getline(m_input, line)) {
+                throw std::runtime_error("input stream closed");
+            }
             std::istringstream stream(line);
             stream >> value;
             stream >> std::ws;

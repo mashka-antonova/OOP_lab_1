@@ -1,7 +1,5 @@
 #include "application.h"
 
-#include "application.h"
-
 #include "constants.h"
 #include <iomanip>
 #include <memory>
@@ -48,7 +46,7 @@ int Application::handleMenuAction(int action) {
             m_console.printLine("Unknown menu item");
         }
     } catch (const std::exception& exception) {
-        m_console.printLine(std::string("Error:") + exception.what());
+        m_console.printLine(std::string("Error: ") + exception.what());
     }
     return exitCode;
 }
@@ -92,14 +90,14 @@ ShapePtr Application::creatShape() {
 
 void Application::printParameterList() {
     if (m_shapeManager.isEmpty())
-        m_console.printLine("Collection is empty");
+        m_console.printLine("collection is empty");
     else
         m_console.printLines(m_shapeManager.buildParameterLines());
 }
 
 void Application::printPerimeterList() {
     if (m_shapeManager.isEmpty())
-        m_console.printLine("Collection is empty");
+        m_console.printLine("collection is empty");
     else
         m_console.printLines(m_shapeManager.buildPerimeterLines());
 }
