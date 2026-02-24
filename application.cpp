@@ -10,7 +10,20 @@
 #include "rectangle.h"
 #include "triangle.h"
 
-Application::Application(ConsoleIo& console) : console(console){}
+Application::Application(ConsoleIo& console) : console(console){
+    void initHandlers();
+}
+
+void Application::initHandlers() {
+    handlers[AddShape] = std::bind(&Application::addShape, this);
+    handlers[ListParameters] = std::bind(&Application::printParameterList, this);
+    handlers[ListPerimeters] = std::bind(&Application::printPerimeterList, this);
+    handlers[SumPerimeters] = std::bind(&Application::printTotalPerimeter, this);
+    handlers[SortByPerimeters] = std::bind(&Application::sortByPerimeters, this);
+    handlers[DeleteByIndex] = std::bind(&Application::deleteShapeByIndex, this);
+    handlers[DeleteByPerimeter] = std::bind(&Application::deleteShapeByPerimeter, this);
+    handlers[Exit] = std::bind(&Application::exit, this);
+}
 
 int Application::run() {
     int exitCode = 0;
@@ -30,34 +43,17 @@ int Application::run() {
 }
 
 int Application::handleMenuAction(int action) {
-    int exitCode = 0;
-    try {
-        if (action == AddShape){
-            shapeManager.addShape(createShape());
-            console.printLine("Shape added");
-        } else if (action == ListParameters) {
-            printParameterList();
-        } else if (action == ListPerimeters) {
-            printPerimeterList();
-        } else if (action == SumPerimeters) {
-            printTotalPerimeter();
-        } else if (action == SortByPerimeters) {
-            shapeManager.sortByPerimeterAscending();
-            console.printLine("Sorting completed");
-        } else if (action == DeleteByIndex) {
-            deleteShapeByIndex();
-        } else if (action == DeleteByPerimeter) {
-            deleteShapeByPerimeter();
-        } else if (action == Exit) {
-            console.printLine("Exiting program");
-            exitCode = 0;
-        } else {
-            console.printLine("Unknown menu item");
+    auto it = handlers.find(action);
+    if (it != handlers.end()) {
+        try {
+            it->second();
+        } catch (const std::exception& exception) {
+            console.printLine(std::string("Error: ") + exception.what());
         }
-    } catch (const std::exception& exception) {
-        console.printLine(std::string("Error: ") + exception.what());
+    } else {
+        console.printLine("Unknown menu item");
     }
-    return exitCode;
+    return 0;
 }
 
 void Application::printMenu() {
@@ -72,15 +68,33 @@ void Application::printMenu() {
     console.printLine("0. Exit");
 }
 
-ShapePtr Application::createShape() {
-    console.printLine("Select shape type:"); //
+void Application::printShapeChoice() {
+    console.printLine("Select shape type:");
     console.printLine("1. Circle");
     console.printLine("2. Rectangle");
     console.printLine("3. Triangle");
+}
 
+void Application::addShape() {
+    shapeManager.addShape(createShape());
+    console.printLine("Shape added");
+}
+
+void Application::sortByPerimeters() {
+    shapeManager.sortByPerimeterAscending();
+    console.printLine("Sorting completed");
+}
+
+void Application::exit() {
+    console.printLine("Exiting program");
+}
+
+
+std::unique_ptr<Shape> Application::createShape() {
+    printShapeChoice();
     const int shapeType = console.readInt("Your choice:"); //
     const std::string shapeName = console.readNonEmptyString("Enter shape custom name:");
-    ShapePtr shape;
+    std::unique_ptr<Shape> shape;
     if (shapeType == shapeCircle) {
         const Point center = console.readPoint("Enter center coordinates:");
         const double radius = console.readDouble("Enter radius:");

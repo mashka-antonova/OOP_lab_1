@@ -6,6 +6,7 @@
 #include <memory>
 #include <vector>
 
+
 class Shape {
 public:
     explicit Shape(std::string name);
@@ -19,8 +20,5 @@ public:
 private:
     std::string name;
 };
-
-using ShapePtr = std::unique_ptr<Shape>;
-using ShapeCollection = std::vector<ShapePtr>;
 
 #endif // SHAPES_H

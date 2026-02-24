@@ -3,7 +3,8 @@
 
 #include "console_io.h"
 #include "shapes_manager.h"
-
+#include <map>
+#include <functional>
 
 class Application{
 public:
@@ -12,13 +13,20 @@ public:
 
 private:
     int handleMenuAction(int action);
+    void initHandlers();
     void printMenu();
-    ShapePtr createShape();
+    void printShapeChoice();
+    std::unique_ptr<Shape> createShape();
+    void addShape();
+    void sortByPerimeters();
+    void exit();
     void printParameterList();
     void printPerimeterList();
     void printTotalPerimeter();
     void deleteShapeByIndex();
     void deleteShapeByPerimeter();
+
+    std::map<int, std::function<void()>> handlers;
 
     ConsoleIo& console;
     ShapeManager shapeManager;

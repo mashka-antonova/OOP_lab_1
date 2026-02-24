@@ -5,7 +5,7 @@
 
 class ShapeManager{
 public:
-    void addShape(ShapePtr shape);
+    void addShape(std::unique_ptr<Shape> shape);
     std::vector<std::string> buildParameterLines() const;
     std::vector<std::string> buildPerimeterLines() const;
     double calclateTotalPerimeter() const;
@@ -14,7 +14,7 @@ public:
     int removeWithPerimeterGreaterThan(double border);
     bool isEmpty() const;
 private:
-    ShapeCollection shapes;
+    std::vector<std::unique_ptr<Shape>> shapes;
 };
 
 #endif // SHAPES_MANAGER_H

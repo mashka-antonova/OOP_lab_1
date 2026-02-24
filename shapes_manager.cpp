@@ -6,7 +6,7 @@
 #include <iomanip>
 #include <algorithm>
 
-void ShapeManager::addShape(ShapePtr shape){
+void ShapeManager::addShape(std::unique_ptr<Shape> shape){
     shapes.push_back(std::move(shape));
 }
 
@@ -32,12 +32,12 @@ std::vector<std::string> ShapeManager::buildPerimeterLines() const {
 
 double ShapeManager::calclateTotalPerimeter() const {
     double totalPerimeter = 0.0;
-    for (const ShapePtr& shape : shapes) //
+    for (const std::unique_ptr<Shape>& shape : shapes) //
         totalPerimeter += shape->getPerimeter();
     return totalPerimeter;
 }
 
-bool compareByPerimeter(const ShapePtr& left, const ShapePtr& right) {
+bool compareByPerimeter(const std::unique_ptr<Shape>& left, const std::unique_ptr<Shape>& right) {
     return left->getPerimeter() < right->getPerimeter();
 }
 
@@ -57,7 +57,7 @@ bool ShapeManager::removeByIndex(int oneBasedIndex){
 
 int ShapeManager::removeWithPerimeterGreaterThan(double threshold) {
     const int oldSize = static_cast<int>(shapes.size());
-    shapes.erase(std::remove_if(shapes.begin(), shapes.end(), [threshold](const ShapePtr& shape) {//
+    shapes.erase(std::remove_if(shapes.begin(), shapes.end(), [threshold](const std::unique_ptr<Shape>& shape) {//
                        return shape->getPerimeter() > threshold;
                    }), shapes.end());
     return oldSize - static_cast<int>(shapes.size());
