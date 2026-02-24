@@ -1,9 +1,16 @@
 #ifndef SHAPES_H
 #define SHAPES_H
 
+#include "constants.h"
+
 #include <string>
 #include <memory>
 #include <vector>
+#include <cctype>
+#include <cmath>
+#include <iomanip>
+#include <sstream>
+#include <stdexcept>
 
 struct Point{
     double x;
@@ -15,53 +22,22 @@ public:
     explicit Shape(std::string name);
     virtual ~Shape() = default;
 
-    const std::string& name() const;
+    const std::string& getName() const;
     virtual std::string typeName() const = 0;
-    virtual double perimeter() const = 0;
+    virtual double getPerimeter() const = 0;
     virtual std::string parametersToString() const = 0;
 
 private:
-    std::string m_name;
-};
-
-class Circle final: public Shape{
-public:
-    Circle(std::string name, Point center, double radius);
-    std::string typeName() const override;
-    virtual double perimeter() const override;
-    virtual std::string parametersToString() const override;
-
-private:
-    Point m_center;
-    double m_radius;
-};
-
-class Rectangle final: public Shape{
-public:
-    Rectangle(std::string name, Point leftTop, Point rightBottom);
-    std::string typeName() const override;
-    double perimeter() const override;
-    std::string parametersToString() const override;
-
-private:
-    Point m_leftTop;
-    Point m_rightBottom;
-};
-
-class Triangle final: public Shape{
-public:
-    Triangle(std::string name, Point first, Point second, Point third);
-    std::string typeName() const override;
-    double perimeter() const override;
-    std::string parametersToString() const override;
-
-private:
-    Point m_first;
-    Point m_second;
-    Point m_third;
+    std::string name;
 };
 
 using ShapePtr = std::unique_ptr<Shape>;
 using ShapeCollection = std::vector<ShapePtr>;
+
+bool isBlank(const std::string& value);
+double distanceBetweenPoints(const Point& first, const Point& second);
+double orientation(const Point& first, const Point& second, const Point& third);
+bool isPositive(double value);
+std::string formatPoint(const Point& point);
 
 #endif // SHAPES_H

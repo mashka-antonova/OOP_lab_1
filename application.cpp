@@ -6,23 +6,24 @@
 #include <sstream>
 #include <stdexcept>
 
-Application::Application(ConsoleIo& console) : m_console(console){}
+#include "circle.h"
+#include "rectangle.h"
+#include "triangle.h"
 
+Application::Application(ConsoleIo& console) : console(console){}
 
-//
 int Application::run() {
     int exitCode = 0;
     bool running = true;
     while (running){
         try {
             printMenu();
-            const int action = m_console.readInt("Enter menu item: ");
+            const int action = console.readInt("Enter menu item: ");
             exitCode = handleMenuAction(action);
             running = (action != Exit);
         } catch (const std::exception& exception) {
-            m_console.printLine(std::string("Error: ") + exception.what());
+            console.printLine(std::string("Error: ") + exception.what());
             exitCode = 1;
-            running = false;
         }
     }
     return exitCode;
@@ -32,8 +33,8 @@ int Application::handleMenuAction(int action) {
     int exitCode = 0;
     try {
         if (action == AddShape){
-            m_shapeManager.addShape(createShape());
-            m_console.printLine("Shape added");
+            shapeManager.addShape(createShape());
+            console.printLine("Shape added");
         } else if (action == ListParameters) {
             printParameterList();
         } else if (action == ListPerimeters) {
@@ -41,57 +42,57 @@ int Application::handleMenuAction(int action) {
         } else if (action == SumPerimeters) {
             printTotalPerimeter();
         } else if (action == SortByPerimeters) {
-            m_shapeManager.sortByPerimeterAscending();
-            m_console.printLine("Sorting completed");
+            shapeManager.sortByPerimeterAscending();
+            console.printLine("Sorting completed");
         } else if (action == DeleteByIndex) {
             deleteShapeByIndex();
         } else if (action == DeleteByPerimeter) {
             deleteShapeByPerimeter();
         } else if (action == Exit) {
-            m_console.printLine("Exiting program");
+            console.printLine("Exiting program");
             exitCode = 0;
         } else {
-            m_console.printLine("Unknown menu item");
+            console.printLine("Unknown menu item");
         }
     } catch (const std::exception& exception) {
-        m_console.printLine(std::string("Error: ") + exception.what());
+        console.printLine(std::string("Error: ") + exception.what());
     }
     return exitCode;
 }
 
 void Application::printMenu() {
-    m_console.printLine("==== Menu ====");
-    m_console.printLine("1. Add a shape");
-    m_console.printLine("2. Show numbered list of shapes with parameters");
-    m_console.printLine("3. Show numbered list of shapes with perimeters");
-    m_console.printLine("4. Show total perimeter");
-    m_console.printLine("5. Sort shapes by perimeter ascending");
-    m_console.printLine("6. Delete shape by index");
-    m_console.printLine("7. Delete shapes with perimeter greater than threshold");
-    m_console.printLine("0. Exit");
+    console.printLine("==== Menu ====");
+    console.printLine("1. Add a shape");
+    console.printLine("2. Show numbered list of shapes with parameters");
+    console.printLine("3. Show numbered list of shapes with perimeters");
+    console.printLine("4. Show total perimeter");
+    console.printLine("5. Sort shapes by perimeter ascending");
+    console.printLine("6. Delete shape by index");
+    console.printLine("7. Delete shapes with perimeter greater than threshold");
+    console.printLine("0. Exit");
 }
 
 ShapePtr Application::createShape() {
-    m_console.printLine("Select shape type:");
-    m_console.printLine("1. Circle");
-    m_console.printLine("2. Rectangle");
-    m_console.printLine("3. Triangle");
+    console.printLine("Select shape type:"); //
+    console.printLine("1. Circle");
+    console.printLine("2. Rectangle");
+    console.printLine("3. Triangle");
 
-    const int shapeType = m_console.readInt("Your choice:");
-    const std::string shapeName = m_console.readNonEmptyString("Enter shape custom name:");
+    const int shapeType = console.readInt("Your choice:"); //
+    const std::string shapeName = console.readNonEmptyString("Enter shape custom name:");
     ShapePtr shape;
     if (shapeType == shapeCircle) {
-        const Point center = m_console.readPoint("Enter center coordinates:");
-        const double radius = m_console.readDouble("Enter radius:");
+        const Point center = console.readPoint("Enter center coordinates:");
+        const double radius = console.readDouble("Enter radius:");
         shape = std::make_unique<Circle>(shapeName, center, radius);
     } else if (shapeType == shapeRectangle) {
-        const Point leftTop = m_console.readPoint("Enter top-left corner coordinates:");
-        const Point rightBottom = m_console.readPoint("Enter bottom-right corner coordinates:");
+        const Point leftTop = console.readPoint("Enter top-left corner coordinates:");
+        const Point rightBottom = console.readPoint("Enter bottom-right corner coordinates:");
         shape = std::make_unique<Rectangle>(shapeName, leftTop, rightBottom);
     } else if (shapeType == shapeTriangle) {
-        const Point first = m_console.readPoint("Enter first coordinates:");
-        const Point second = m_console.readPoint("Enter second coordinates:");
-        const Point third = m_console.readPoint("Enter third coordinates:");
+        const Point first = console.readPoint("Enter first coordinates:");
+        const Point second = console.readPoint("Enter second coordinates:");
+        const Point third = console.readPoint("Enter third coordinates:");
         shape = std::make_unique<Triangle>(shapeName, first, second, third);
     } else {
         throw std::invalid_argument("unknown shape type");
@@ -100,33 +101,33 @@ ShapePtr Application::createShape() {
 }
 
 void Application::printParameterList() {
-    if (m_shapeManager.isEmpty())
-        m_console.printLine("collection is empty");
+    if (shapeManager.isEmpty())
+        console.printLine("collection is empty");
     else
-        m_console.printLines(m_shapeManager.buildParameterLines());
+        console.printLines(shapeManager.buildParameterLines());
 }
 
 void Application::printPerimeterList() {
-    if (m_shapeManager.isEmpty())
-        m_console.printLine("collection is empty");
+    if (shapeManager.isEmpty())
+        console.printLine("collection is empty");
     else
-        m_console.printLines(m_shapeManager.buildPerimeterLines());
+        console.printLines(shapeManager.buildPerimeterLines());
 }
 
 void Application::printTotalPerimeter(){
     std::ostringstream stream;
-    stream << std::fixed << std::setprecision(Precision) << m_shapeManager.calclateTotalPerimeter();
-    m_console.printLine("Total perimeter: " + stream.str());
+    stream << std::fixed << std::setprecision(Precision) << shapeManager.calclateTotalPerimeter();
+    console.printLine("Total perimeter: " + stream.str());
 }
 
 void Application::deleteShapeByIndex(){
-    const int index = m_console.readInt("Enter shape number to delete:");
-    const bool removed = m_shapeManager.removeByIndex(index);
-    m_console.printLine(removed ? "Shape deleted" : "Error: invalid index");
+    const int index = console.readInt("Enter shape number to delete:");
+    const bool removed = shapeManager.removeByIndex(index);
+    console.printLine(removed ? "Shape deleted" : "Error: invalid index");
 }
 
 void Application::deleteShapeByPerimeter(){
-    const double border = m_console.readDouble("Enter perimeter border:");
-    const int removedCount = m_shapeManager.removeWithPerimeterGreaterThan(border);
-    m_console.printLine("Shapes deleted: " + std::to_string(removedCount));
+    const double border = console.readDouble("Enter perimeter border:");
+    const int removedCount = shapeManager.removeWithPerimeterGreaterThan(border);
+    console.printLine("Shapes deleted: " + std::to_string(removedCount));
 }

@@ -4,7 +4,7 @@
 #include <cctype>
 
 
-ConsoleIo::ConsoleIo(std::istream& input, std::ostream& output) : m_input(input), m_output(output){}
+ConsoleIo::ConsoleIo(std::istream& input, std::ostream& output) : input(input), output(output){}
 
 int ConsoleIo::readInt(const std::string& promt) {
     return readNumericValue<int>(promt, "please enter an integer");
@@ -19,7 +19,7 @@ std::string ConsoleIo::readNonEmptyString(const std::string& promt) {
     bool valid = false;
     while (!valid){
         printLine(promt);
-        if (!std::getline(m_input, value)) {
+        if (!std::getline(input, value)) {
             throw std::runtime_error("input stream closed");
         }
 
@@ -42,8 +42,8 @@ Point ConsoleIo::readPoint(const std::string& promt){
 }
 
 void ConsoleIo::printLine(const std::string& line) {
-    m_output << line << '\n';
-    m_output.flush();
+    output << line << '\n';
+    output.flush();
 }
 
 void ConsoleIo::printLines(const std::vector<std::string>& lines) {

@@ -29,7 +29,7 @@ private:
         while(!parsed) {
             printLine(promt);
             std::string line;
-            if (!std::getline(m_input, line)) {
+            if (!std::getline(input, line)) {
                 throw std::runtime_error("input stream closed");
             }
             std::istringstream stream(line);
@@ -43,8 +43,8 @@ private:
         return value;
     }
 
-    std::istream& m_input;
-    std::ostream& m_output;
+    std::istream& input;
+    std::ostream& output;
 };
 
 #endif // CONSOLE_IO_H

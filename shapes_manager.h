@@ -14,7 +14,7 @@ public:
     int removeWithPerimeterGreaterThan(double border);
     bool isEmpty() const;
 private:
-    ShapeCollection m_shapes;
+    ShapeCollection shapes;
 };
 
 #endif // SHAPES_MANAGER_H

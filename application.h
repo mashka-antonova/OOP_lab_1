@@ -20,8 +20,8 @@ private:
     void deleteShapeByIndex();
     void deleteShapeByPerimeter();
 
-    ConsoleIo& m_console;
-    ShapeManager m_shapeManager;
+    ConsoleIo& console;
+    ShapeManager shapeManager;
 };
 
 
