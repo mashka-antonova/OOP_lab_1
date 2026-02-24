@@ -10,6 +10,7 @@ SOURCES += \
         application.cpp \
         circle.cpp \
         console_io.cpp \
+        geometry_utils.cpp \
         main.cpp \
         rectangle.cpp \
         shapes.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     circle.h \
     console_io.h \
     constants.h \
+    geometry_utils.h \
     rectangle.h \
     shapes.h \
     shapes_manager.h \

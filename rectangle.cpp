@@ -1,11 +1,12 @@
 #include "rectangle.h"
 #include "shapes.h"
+#include <stdexcept>
 
 Rectangle::Rectangle(std::string name, Point leftTop, Point rightBottom) :
     Shape(std::move(name)), leftTop(leftTop), rightBottom(rightBottom){
     const double width = rightBottom.x - leftTop.x;
     const double height = leftTop.y - rightBottom.y;
-    if (!isPositive(width) || !isPositive(height))
+    if (!GeometryUtils::isPositive(width) || !GeometryUtils::isPositive(height))
         throw std::invalid_argument("The points of the rectangle are invalid");
 }
 
@@ -20,6 +21,6 @@ double Rectangle::getPerimeter() const{
 }
 
 std::string Rectangle::parametersToString() const {
-    return "name: " + getName() + ", left-top: (" + formatPoint(leftTop) + "), right-bottom: (" + formatPoint(rightBottom) + ")";
+    return "name: " + getName() + ", left-top: (" + GeometryUtils::formatPoint(leftTop) + "), right-bottom: (" + GeometryUtils::formatPoint(rightBottom) + ")";
 }
 
