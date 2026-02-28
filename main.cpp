@@ -1,15 +1,9 @@
-#include "application.h"
-#include "console_io.h"
-
+#include <format>
 #include <iostream>
+#include <string>
 
-int main(int argc, char *argv[])
-{
-    (void)argc;
-    (void)argv;
-
-    ConsoleIo console(std::cin, std::cout);
-    Application application(console);
-    return application.run();
-
+int main() {
+    std::string test = std::format("Hello, {}!", "C++20");
+    std::cout << test << std::endl;
+    return 0;
 }

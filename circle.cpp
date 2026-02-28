@@ -1,27 +1,25 @@
 #include "circle.h"
-#include <iomanip>
-#include <sstream>
 
-Circle::Circle(std::string name, Point center, double radius) :
-    Shape(std::move(name)), center(center), radius(radius) {
-    if (!GeometryUtils::isPositive(radius)) {
-        throw std::invalid_argument("Radius must be greater than zero!");
-    }
+#include <stdexcept>
+#include <numbers>
+#include <format>
+
+Circle::Circle(std::string name, Point center, double radius)
+    : Shape(std::move(name)), center(center), radius(radius) {
+    if (!GeometryUtils::isPositive(radius))
+        throw std::invalid_argument("Radius must be positive!");
 }
 
-std::string Circle::typeName() const {
+std::string Circle::shapeType() const {
     return "Circle";
 }
 
 double Circle::getPerimeter() const {
-    return Two * Pi * radius;
+    return 2 * radius * std::numbers::pi;
 }
 
 std::string Circle::parametersToString() const {
-    std::ostringstream stream;
-    stream << std::fixed << std::setprecision(Precision)
-           << "name: " << getName()
-           << " center: (" << GeometryUtils::formatPoint(center) << ")"
-           << " radius: " << radius;
-    return stream.str();
+    return std::format(
+        "name: {}, center: {}, radius: {:.3f}",
+        getName(), GeometryUtils::formatPoint(center), radius);
 }

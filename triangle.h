@@ -1,19 +1,19 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
 
-#include "shapes.h"
+#include "shape.h"
+#include "geometry_utils.h"
 
-class Triangle final: public Shape{
+class Triangle final: public Shape {
 public:
     Triangle(std::string name, Point first, Point second, Point third);
-    std::string typeName() const override;
+
+    std::string shapeType() const override;
     double getPerimeter() const override;
     std::string parametersToString() const override;
 
 private:
-    Point first;
-    Point second;
-    Point third;
+    Point first, second, third;
 };
 
-#endif
+#endif // TRIANGLE_H

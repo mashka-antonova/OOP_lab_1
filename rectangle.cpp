@@ -1,26 +1,29 @@
 #include "rectangle.h"
-#include "shapes.h"
-#include <stdexcept>
 
-Rectangle::Rectangle(std::string name, Point leftTop, Point rightBottom) :
-    Shape(std::move(name)), leftTop(leftTop), rightBottom(rightBottom){
-    const double width = rightBottom.x - leftTop.x;
-    const double height = leftTop.y - rightBottom.y;
-    if (!GeometryUtils::isPositive(width) || !GeometryUtils::isPositive(height))
-        throw std::invalid_argument("The points of the rectangle are invalid");
+#include <stdexcept>
+#include <format>
+
+Rectangle::Rectangle(std::string name, Point leftTop, Point rightBottom)
+    : Shape(std::move(name)), leftTop(leftTop), rightBottom(rightBottom){
+    double height = leftTop.y - rightBottom.y;
+    double weight = rightBottom.x - leftTop.x;
+    if (!GeometryUtils::isPositive(height) || !!GeometryUtils::isPositive(weight))
+        throw std::invalid_argument("Bad Rectangle:(");
 }
 
-std::string Rectangle::typeName() const{
+std::string Rectangle::shapeType() const {
     return "Rectangle";
 }
 
-double Rectangle::getPerimeter() const{
-    const double width = rightBottom.x - leftTop.x;
-    const double height = leftTop.y - rightBottom.y;
-    return Two * (width + height);
+double Rectangle::getPerimeter() const {
+    double height = leftTop.y - rightBottom.y;
+    double weight = rightBottom.x - leftTop.x;
+    return 2 * (height + weight);
 }
 
 std::string Rectangle::parametersToString() const {
-    return "name: " + getName() + ", left-top: (" + GeometryUtils::formatPoint(leftTop) + "), right-bottom: (" + GeometryUtils::formatPoint(rightBottom) + ")";
+    return std::format("name: {}, left-top: {}, right-bottom: {}",
+                       getName(),
+                       GeometryUtils::formatPoint(leftTop),
+                       GeometryUtils::formatPoint(rightBottom));
 }
-

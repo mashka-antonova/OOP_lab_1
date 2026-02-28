@@ -1,20 +1,22 @@
 #include "geometry_utils.h"
-#include <cctype>
-#include <cmath>
-#include <iomanip>
-#include <sstream>
 
-bool GeometryUtils::isBlank(const std::string& value) {
-    if (value.empty()) return true;
-    for (char symbol : value)
-        if (!std::isspace(static_cast<unsigned char>(symbol)))
-            return false;
-    return true;
+#include <cmath>
+#include <format>
+
+bool GeometryUtils::isBlank(const std::string& value){
+    bool isBlank = true;
+    for (char c : value){
+        if (!std::isspace(static_cast<unsigned char>(c))){
+            isBlank = false;
+            break;
+        }
+    }
+    return isBlank;
 }
 
-double GeometryUtils::distanceBetweenPoints(const Point& first, const Point& second) {
-    const double deltaX = first.x - second.x;
-    const double deltaY = first.y - second.y;
+double GeometryUtils::distanceBetweenPoints(const Point& a, const Point& b){
+    double deltaX = b.x - a.x;
+    double deltaY = b.y - a.y;
     return std::sqrt(deltaX * deltaX + deltaY * deltaY);
 }
 
@@ -26,12 +28,10 @@ double GeometryUtils::orientation(const Point& first, const Point& second, const
     return vectorAx * vectorBy - vectorAy * vectorBx;
 }
 
-bool GeometryUtils::isPositive(double value) {
-    return value > Epsilon;
+bool GeometryUtils::isPositive(double value){
+    return value > EPS;
 }
 
 std::string GeometryUtils::formatPoint(const Point& point) {
-    std::ostringstream stream;
-    stream << std::fixed << std::setprecision(Precision) << point.x << ", " << point.y;
-    return stream.str();
+    return std::format("({:.3f}, {:.3f})", point.x, point.y);
 }
