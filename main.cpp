@@ -1,9 +1,7 @@
-#include <format>
-#include <iostream>
-#include <string>
+#include "application.h"
 
 int main() {
-    std::string test = std::format("Hello, {}!", "C++20");
-    std::cout << test << std::endl;
+    Application app;
+    app.run();
     return 0;
 }

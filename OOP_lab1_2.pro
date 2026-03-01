@@ -14,7 +14,7 @@ SOURCES += \
         main.cpp \
         rectangle.cpp \
         shape.cpp \
-        shape_factory.cpp \
+        shape_creator.cpp \
         shape_manager.cpp \
         triangle.cpp
 
@@ -31,7 +31,7 @@ HEADERS += \
     menu_action.h \
     rectangle.h \
     shape.h \
-    shape_factory.h \
+    shape_creator.h \
     shape_manager.h \
     shape_type.h \
     triangle.h
