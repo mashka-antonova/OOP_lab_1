@@ -13,6 +13,8 @@ SOURCES += \
         console_io.cpp \
         geometry_utils.cpp \
         main.cpp \
+        polygon.cpp \
+        polygon_factory.cpp \
         rectangle.cpp \
         rectangle_factory.cpp \
         shape.cpp \
@@ -33,6 +35,8 @@ HEADERS += \
     console_io.h \
     geometry_utils.h \
     menu_action.h \
+    polygon.h \
+    polygon_factory.h \
     rectangle.h \
     rectangle_factory.h \
     shape.h \
