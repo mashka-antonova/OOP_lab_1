@@ -10,7 +10,7 @@
 class ShapeCreator {
 public:
     ShapeCreator();
-    std::unique_ptr<Shape> creatShape(ShapeType type) const;
+    std::unique_ptr<Shape> creatShape(ShapeType type);
 private:
     std::map<ShapeType, std::unique_ptr<ShapeFactory>> factories;
     void initFactories();

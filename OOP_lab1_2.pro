@@ -9,15 +9,17 @@ CONFIG += c++20 cmdline
 SOURCES += \
         application.cpp \
         circle.cpp \
+        circle_factrory.cpp \
         console_io.cpp \
         geometry_utils.cpp \
         main.cpp \
         rectangle.cpp \
+        rectangle_factory.cpp \
         shape.cpp \
         shape_creator.cpp \
-        shape_factory.cpp \
         shape_manager.cpp \
-        triangle.cpp
+        triangle.cpp \
+        triangle_factory.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -27,13 +29,16 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     application.h \
     circle.h \
+    circle_factrory.h \
     console_io.h \
     geometry_utils.h \
     menu_action.h \
     rectangle.h \
+    rectangle_factory.h \
     shape.h \
     shape_creator.h \
     shape_factory.h \
     shape_manager.h \
     shape_type.h \
-    triangle.h
+    triangle.h \
+    triangle_factory.h

@@ -1,7 +1,9 @@
 #include "shape_creator.h"
 
 #include <memory>
-#include "shape_factory.h"
+#include <circle_factrory.h>
+#include <rectangle_factory.h>
+#include <triangle_factory.h>
 
 ShapeCreator::ShapeCreator() {
     initFactories();
@@ -13,7 +15,7 @@ void ShapeCreator::initFactories() {
     factories[ShapeType::Triangle] = std::make_unique<TriangleFactory>();
 }
 
-std::unique_ptr<Shape> ShapeCreator::creatShape(ShapeType type) const{
+std::unique_ptr<Shape> ShapeCreator::creatShape(ShapeType type) {
     auto it = factories.find(type);
     if (it == factories.end())
         throw std::invalid_argument("unknown shape type");

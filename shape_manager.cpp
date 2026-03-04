@@ -22,7 +22,7 @@ std::vector<std::string> ShapeManager::buildPerameterList() const {
 std::vector<std::string> ShapeManager::buildPerimeterList() const {
     std::vector<std::string> lines;
     for (size_t i = 0; i < shapes.size(); i++)
-        lines.push_back(std::format("{}) {} | {} Perimeter: {}",
+        lines.push_back(std::format("{}) {} {} Perimeter: {}",
                                     i + 1,
                                     shapes[i]->getName(),
                                     shapes[i]->shapeType(),
