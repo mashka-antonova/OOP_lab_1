@@ -1,44 +1,21 @@
 #include "shape_creator.h"
-#include "circle.h"
-#include "rectangle.h"
-#include "triangle.h"
 
-ShapeCreator::ShapeCreator(ConsoleIO& io) : io(io) {
-    initCreators();
+#include <memory>
+#include "shape_factory.h"
+
+ShapeCreator::ShapeCreator() {
+    initFactories();
 }
 
-void ShapeCreator::initCreators() {
-    creators[ShapeType::Circle] = createCircle;
-    creators[ShapeType::Rectangle] = createRectangle;
-    creators[ShapeType::Triangle] = createTriangle;
+void ShapeCreator::initFactories() {
+    factories[ShapeType::Circle] = std::make_unique<CircleFactory>();
+    factories[ShapeType::Rectangle] = std::make_unique<RectangleFactory>();
+    factories[ShapeType::Triangle] = std::make_unique<TriangleFactory>();
 }
 
-std::unique_ptr<Shape> ShapeCreator::creatShape(ShapeType type) const {
-    std::unique_ptr<Shape> shape = nullptr;
-    auto it = creators.find(type);
-    if (it != creators.end())
-        shape = it->second(io);
-    return shape;
-}
-
-std::unique_ptr<Shape> ShapeCreator::createCircle(ConsoleIO& io) {
-    std::string name = io.readString("Enter circle name: ");
-    Point center = io.readPoint("Center");
-    double radius = io.readDouble("Radius: ");
-    return std::make_unique<Circle>(name, center, radius);
-}
-
-std::unique_ptr<Shape> ShapeCreator::createRectangle(ConsoleIO& io) {
-    std::string name = io.readString("Enter rectangle name: ");
-    Point leftTop = io.readPoint("Top-left corner");
-    Point rightBottom = io.readPoint("Bottom-right corner");
-    return std::make_unique<Rectangle>(name, leftTop, rightBottom);
-}
-
-std::unique_ptr<Shape> ShapeCreator::createTriangle(ConsoleIO& io) {
-    std::string name = io.readString("Enter triangle name: ");
-    Point p1 = io.readPoint("Point 1");
-    Point p2 = io.readPoint("Point 2");
-    Point p3 = io.readPoint("Point 3");
-    return std::make_unique<Triangle>(name, p1, p2, p3);
+std::unique_ptr<Shape> ShapeCreator::creatShape(ShapeType type) const{
+    auto it = factories.find(type);
+    if (it == factories.end())
+        throw std::invalid_argument("unknown shape type");
+    return it->second->creat();
 }

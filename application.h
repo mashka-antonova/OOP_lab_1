@@ -5,7 +5,6 @@
 #include <functional>
 
 #include "shape_manager.h"
-#include "console_io.h"
 #include "shape_creator.h"
 #include "menu_action.h"
 
@@ -15,9 +14,8 @@ public:
     void run();
 
 private:
-    ShapeManager manager;
-    ConsoleIO console;
-    ShapeCreator creator;
+    ShapeManager shapeManager;
+    ShapeCreator shapeCreator;
     bool isRunning;
 
     std::map<MenuAction, std::function<void()>> actions;

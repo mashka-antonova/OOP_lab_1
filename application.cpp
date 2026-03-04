@@ -1,13 +1,13 @@
 #include "application.h"
 
 #include <format>
+#include "console_io.h"
 
-Application::Application() : creator(console), isRunning(false) { //
+Application::Application() : shapeManager(), shapeCreator(), isRunning(false) {
     initActions();
 }
 
 void Application::initActions() {
-
     actions[MenuAction::Exit] = std::bind(&Application::onExit, this);
     actions[MenuAction::AddShape] = std::bind(&Application::onAddShape, this);
     actions[MenuAction::PrintParameters] = std::bind(&Application::onPrintParameters, this);
@@ -22,78 +22,78 @@ void Application::run() {
     isRunning = true;
 
     while (isRunning) {
-        console.printMenu();
-        MenuAction choice = static_cast<MenuAction>(console.readInt("Enter choice: "));
+        ConsoleIO::printMenu();
+        MenuAction choice = static_cast<MenuAction>(ConsoleIO::readInt("Enter choice: "));
         auto it = actions.find(choice);
         if (it != actions.end())
             it->second();
         else
-            console.printMessage("unknown option, please try again");
+            ConsoleIO::printMessage("unknown option, please try again");
     }
 }
 
 void Application::onExit() {
     isRunning = false;
-    console.printMessage("----EXIT----");
+    ConsoleIO::printMessage("----EXIT----");
 }
 
 void Application::onAddShape() {
-    console.printShapeChoice();
-    ShapeType selectedType = static_cast<ShapeType>(console.readInt("Choice: "));
+    ConsoleIO::printShapeChoice();
+    ShapeType selectedType = static_cast<ShapeType>(ConsoleIO::readInt("Choice: "));
     try {
-        std::unique_ptr<Shape> shape = creator.creatShape(selectedType);
+        std::unique_ptr<Shape> shape = shapeCreator.creatShape(selectedType);
         if (shape){
-            manager.addShape(std::move(shape));
-            console.printMessage("Shape added successfully.");
+            shapeManager.addShape(std::move(shape));
+            ConsoleIO::printMessage("Shape added successfully.");
         }
     } catch (const std::exception& e) {
-        console.printMessage(std::format("Error creating shape: {}", e.what()));
+        ConsoleIO::printMessage(std::format("Error creating shape: {}", e.what()));
     }
 }
 
 void Application::onPrintParameters() {
-    std::vector<std::string> list = manager.buildPerameterList();
+    std::vector<std::string> list = shapeManager.buildPerameterList();
     if (list.empty()) {
-        console.printMessage("the collection is empty");
+        ConsoleIO::printMessage("the collection is empty");
     } else {
         for (const std::string& line : list) {
-            console.printMessage(line);
+            ConsoleIO::printMessage(line);
         }
     }
 }
 
 void Application::onPrintPerimeters() {
-    std::vector<std::string> list = manager.buildPerimeterList();
+    std::vector<std::string> list = shapeManager.buildPerimeterList();
     if (list.empty()) {
-        console.printMessage("the collection is empty");
+        ConsoleIO::printMessage("the collection is empty");
     } else {
         for (const std::string& line : list) {
-            console.printMessage(line);
+            ConsoleIO::printMessage(line);
         }
     }
 }
 
 void Application::onPrintTotalPerimeter() {
-    double total = manager.calculateTotalPerimeter();
-    console.printMessage(std::format("Total perimeter: {:.3f}", total));
+    double total = shapeManager.calculateTotalPerimeter();
+    ConsoleIO::printMessage(std::format("Total perimeter: {:.3f}", total));
 }
 
 void Application::onSortShapes() {
-    manager.sortByPerimeter();
-    console.printMessage("Shapes have been sorted by perimeter.");
+    shapeManager.sortByPerimeter();
+    ConsoleIO::printMessage("Shapes have been sorted by perimeter.");
 }
 
 void Application::onRemoveByIndex() {
-    int index = console.readInt("Enter shape number to remove: ");
-    if (manager.removeByIndex(index)) {
-        console.printMessage("shape removed.");
+    int index = ConsoleIO::readInt("Enter shape number to remove: ");
+    if (shapeManager.removeByIndex(index)) {
+        ConsoleIO::printMessage("shape removed.");
     } else {
-        console.printMessage("error: incorrect shape number");
+        ConsoleIO::printMessage("error: incorrect shape number");
     }
 }
 
 void Application::onRemoveByBorder() {
-    double threshold = console.readDouble("Enter perimeter border: ");
-    int removedCount = manager.removeByPerimeterGreaterThan(threshold);
-    console.printMessage(std::format("removed {} shapes.", removedCount));
+    double border = ConsoleIO::readDouble("Enter perimeter border: ");
+    int removedCount = shapeManager.removeByPerimeterGreaterThan(border);
+    ConsoleIO::printMessage(std::format("removed {} shapes.", removedCount));
 }

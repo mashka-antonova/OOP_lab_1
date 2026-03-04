@@ -10,8 +10,8 @@ void ShapeManager::addShape(std::unique_ptr<Shape> shape) {
 
 std::vector<std::string> ShapeManager::buildPerameterList() const {
     std::vector<std::string> lines;
-    for (size_t i = 0; i < shapes.size(); i++) //
-        lines.push_back(std::format("{} {} {}",
+    for (size_t i = 0; i < shapes.size(); i++)
+        lines.push_back(std::format("{}) {} | {}",
                                     i + 1,
                                     shapes[i]->shapeType(),
                                     shapes[i]->parametersToString()));
@@ -22,7 +22,7 @@ std::vector<std::string> ShapeManager::buildPerameterList() const {
 std::vector<std::string> ShapeManager::buildPerimeterList() const {
     std::vector<std::string> lines;
     for (size_t i = 0; i < shapes.size(); i++)
-        lines.push_back(std::format("{} {} {} Perimeter: {}",
+        lines.push_back(std::format("{}) {} | {} Perimeter: {}",
                                     i + 1,
                                     shapes[i]->getName(),
                                     shapes[i]->shapeType(),
@@ -54,7 +54,7 @@ bool ShapeManager::removeByIndex(int oneBasedIndex) {
 }
 
 int ShapeManager::removeByPerimeterGreaterThan(double border) {
-    int removedCount = std::erase_if(shapes, [border](const std::unique_ptr<Shape>& s){ //
+    int removedCount = std::erase_if(shapes, [border](const std::unique_ptr<Shape>& s){
         return s->getPerimeter() > border;
     });
     return removedCount;
