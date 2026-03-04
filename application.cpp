@@ -86,7 +86,7 @@ void Application::onSortShapes() {
 void Application::onRemoveByIndex() {
     int index = ConsoleIO::readInt("Enter shape number to remove: ");
     if (shapeManager.removeByIndex(index)) {
-        ConsoleIO::printMessage("shape removed.");
+        ConsoleIO::printMessage("shape removed");
     } else {
         ConsoleIO::printMessage("error: incorrect shape number");
     }

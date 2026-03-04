@@ -35,3 +35,7 @@ bool GeometryUtils::isPositive(double value){
 std::string GeometryUtils::formatPoint(const Point& point) {
     return std::format("({:.3f}, {:.3f})", point.x, point.y);
 }
+
+bool GeometryUtils::pointsAreEqual(const Point& left, const Point& right) {
+    return std::abs(left.x - right.x) <= EPS && std::abs(left.y - right.y) <= EPS;
+}

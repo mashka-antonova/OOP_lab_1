@@ -1,10 +1,11 @@
 #ifndef POLYGON_FACTORY_H
 #define POLYGON_FACTORY_H
 
-class PolygonFactory
-{
+#include "shape_factory.h"
+
+class PolygonFactory : public ShapeFactory {
 public:
-    PolygonFactory();
+    std::unique_ptr<Shape> creat() override;
 };
 
 #endif // POLYGON_FACTORY_H

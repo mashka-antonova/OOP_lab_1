@@ -42,5 +42,5 @@ void ConsoleIO::printMenu() {
 
 void ConsoleIO::printShapeChoice() {
     printMessage("\nSelect shape type:");
-    printMessage("1. Circle\n2. Rectangle\n3. Triangle");
+    printMessage("1. Circle\n2. Rectangle\n3. Triangle\n4. Convex polygon");
 }

@@ -2,14 +2,14 @@
 #define MENU_ACTION_H
 
 enum class MenuAction {
-    Exit = 0,
-    AddShape = 1,
-    PrintParameters = 2,
-    PrintPerimeters = 3,
-    PrintTotalPerimeter = 4,
-    SortByPerimeter = 5,
-    RemoveByIndex = 6,
-    RemoveByBorder = 7,
+    Exit,
+    AddShape,
+    PrintParameters,
+    PrintPerimeters,
+    PrintTotalPerimeter,
+    SortByPerimeter,
+    RemoveByIndex,
+    RemoveByBorder,
 };
 
 #endif // MENU_ACTION_H

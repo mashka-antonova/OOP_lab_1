@@ -4,7 +4,7 @@
 #include "shape.h"
 #include "geometry_utils.h"
 
-class Triangle final: public Shape {
+class Triangle final : public Shape {
 public:
     Triangle(std::string name, Point first, Point second, Point third);
 

@@ -18,6 +18,8 @@ public:
     static double orientation(const Point& first, const Point& second, const Point& third);
     static bool isPositive(const double value);
     static std::string formatPoint(const Point& point);
+    static bool pointsAreEqual(const Point& left, const Point& right);
+
 };
 
 #endif // GEOMETRY_UTILS_H

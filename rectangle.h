@@ -12,7 +12,7 @@ public:
     double getPerimeter() const override;
     std::string parametersToString() const override;
 
-public:
+private:
     Point leftTop;
     Point rightBottom;
 };
