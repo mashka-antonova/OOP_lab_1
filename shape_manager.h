@@ -14,7 +14,6 @@ public:
     void sortByPerimeter();
     bool removeByIndex(int oneBasedIndex);
     int removeByPerimeterGreaterThan(double border);
-    bool isEmpty();
 
 private:
     std::vector<std::unique_ptr<Shape>> shapes;

@@ -2,7 +2,7 @@
 
 #include <format>
 
-Application::Application() : creator(console), isRunning(false) {
+Application::Application() : creator(console), isRunning(false) { //
     initActions();
 }
 
@@ -34,7 +34,7 @@ void Application::run() {
 
 void Application::onExit() {
     isRunning = false;
-    console.printMessage("---EXIT---");
+    console.printMessage("----EXIT----");
 }
 
 void Application::onAddShape() {

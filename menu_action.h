@@ -9,7 +9,7 @@ enum class MenuAction {
     PrintTotalPerimeter = 4,
     SortByPerimeter = 5,
     RemoveByIndex = 6,
-    RemoveByBorder = 7
+    RemoveByBorder = 7,
 };
 
 #endif // MENU_ACTION_H

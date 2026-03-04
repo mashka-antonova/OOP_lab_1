@@ -5,8 +5,8 @@
 
 bool GeometryUtils::isBlank(const std::string& value){
     bool isBlank = true;
-    for (char c : value){
-        if (!std::isspace(static_cast<unsigned char>(c))){
+    for (unsigned char c : value){
+        if (!std::isspace(c)){
             isBlank = false;
             break;
         }

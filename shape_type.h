@@ -4,7 +4,7 @@
 enum class ShapeType {
     Circle = 1,
     Rectangle = 2,
-    Triangle = 3
+    Triangle = 3,
 };
 
 #endif // SHAPE_TYPE_H

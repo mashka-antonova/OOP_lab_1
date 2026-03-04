@@ -7,7 +7,7 @@ Rectangle::Rectangle(std::string name, Point leftTop, Point rightBottom)
     : Shape(std::move(name)), leftTop(leftTop), rightBottom(rightBottom){
     double height = leftTop.y - rightBottom.y;
     double weight = rightBottom.x - leftTop.x;
-    if (!GeometryUtils::isPositive(height) || !!GeometryUtils::isPositive(weight))
+    if (!GeometryUtils::isPositive(height) || !GeometryUtils::isPositive(weight))
         throw std::invalid_argument("Bad Rectangle:(");
 }
 
