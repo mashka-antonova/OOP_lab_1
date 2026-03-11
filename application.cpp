@@ -51,7 +51,7 @@ void Application::run() {
     }
 }
 
-void Application::onExit() {;
+void Application::onExit() {
     ConsoleIO::printMessage("----EXIT----");
 }
 

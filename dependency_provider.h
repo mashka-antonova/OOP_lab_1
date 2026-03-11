@@ -5,7 +5,7 @@
 #include <memory>
 #include "shape_factory.h"
 #include "application.h"
-#include "typeindex"
+#include <typeindex>
 
 class DependencyProvider {
 public:
