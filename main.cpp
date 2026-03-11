@@ -1,7 +1,9 @@
-#include "application.h"
+#include "dependency_provider.h"
 
 int main() {
-    Application app;
+    DependencyProvider provider;
+    Application app = provider.createApplication();
     app.run();
+    provider.clean();
     return 0;
 }

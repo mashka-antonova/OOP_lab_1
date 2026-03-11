@@ -1,14 +1,22 @@
 #include "application.h"
-
-#include <format>
 #include "console_io.h"
+#include "circle.h"
+#include "rectangle.h"
+#include "triangle.h"
+#include "polygon.h"
+#include <format>
 
-Application::Application() : shapeManager(), shapeCreator(), isRunning(false) {
+
+Application::Application(ShapeManager manager, ShapeCreator creator):
+    shapeManager(std::move(manager)),
+    shapeCreator(std::move(creator))
+{
     initActions();
+    initTypes();
 }
 
 void Application::initActions() {
-    actions[MenuAction::Exit] = std::bind(&Application::onExit, this);
+    actions[MenuAction::Exit] = std::bind(&Application::onExit, this); //
     actions[MenuAction::AddShape] = std::bind(&Application::onAddShape, this);
     actions[MenuAction::PrintParameters] = std::bind(&Application::onPrintParameters, this);
     actions[MenuAction::PrintPerimeters] = std::bind(&Application::onPrintPerimeters, this);
@@ -18,12 +26,23 @@ void Application::initActions() {
     actions[MenuAction::RemoveByBorder] = std::bind(&Application::onRemoveByBorder, this);
 }
 
-void Application::run() {
-    isRunning = true;
+void Application::initTypes() {
+    menuToShapeType.emplace(1, typeid(Circle));
+    menuToShapeType.emplace(2, typeid(Rectangle));
+    menuToShapeType.emplace(3, typeid(Triangle));
+    menuToShapeType.emplace(4, typeid(Polygon));
+}
 
-    while (isRunning) {
+void Application::run() {
+    while (true) {
         ConsoleIO::printMenu();
         MenuAction choice = static_cast<MenuAction>(ConsoleIO::readInt("Enter choice: "));
+
+        if (choice == MenuAction::Exit) {
+            onExit();
+            break;
+        }
+
         auto it = actions.find(choice);
         if (it != actions.end())
             it->second();
@@ -32,23 +51,27 @@ void Application::run() {
     }
 }
 
-void Application::onExit() {
-    isRunning = false;
+void Application::onExit() {;
     ConsoleIO::printMessage("----EXIT----");
 }
 
 void Application::onAddShape() {
     ConsoleIO::printShapeChoice();
-    ShapeType selectedType = static_cast<ShapeType>(ConsoleIO::readInt("Choice: "));
-    try {
-        std::unique_ptr<Shape> shape = shapeCreator.creatShape(selectedType);
-        if (shape){
-            shapeManager.addShape(std::move(shape));
-            ConsoleIO::printMessage("Shape added successfully.");
+    int typeChoice = ConsoleIO::readInt("Choice: ");
+
+    auto it = menuToShapeType.find(typeChoice);
+    if (it != menuToShapeType.end()) {
+        try {
+            std::unique_ptr<Shape> shape = shapeCreator.creatShape(it->second);
+            if (shape) {
+                shapeManager.addShape(std::move(shape));
+                ConsoleIO::printMessage("Shape added successfully");
+            }
+        } catch (const std::exception& e) {
+            ConsoleIO::printMessage(std::format("Error: {}", e.what()));
         }
-    } catch (const std::exception& e) {
-        ConsoleIO::printMessage(std::format("Error creating shape: {}", e.what()));
-    }
+    } else
+        ConsoleIO::printMessage("invalid shape type");
 }
 
 void Application::onPrintParameters() {
@@ -56,9 +79,8 @@ void Application::onPrintParameters() {
     if (list.empty()) {
         ConsoleIO::printMessage("the collection is empty");
     } else {
-        for (const std::string& line : list) {
+        for (const std::string& line : list)
             ConsoleIO::printMessage(line);
-        }
     }
 }
 

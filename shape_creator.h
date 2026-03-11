@@ -6,14 +6,15 @@
 #include <shape.h>
 #include <shape_type.h>
 #include "shape_factory.h"
+#include <typeindex>
 
 class ShapeCreator {
 public:
-    ShapeCreator();
-    std::unique_ptr<Shape> creatShape(ShapeType type);
+    explicit ShapeCreator(std::map<std::type_index, ShapeFactory*> factories);
+    std::unique_ptr<Shape> creatShape(std::type_index type);
+
 private:
-    std::map<ShapeType, std::unique_ptr<ShapeFactory>> factories;
-    void initFactories();
+    std::map<std::type_index, ShapeFactory*> factories;
 };
 
 #endif

@@ -1,23 +1,10 @@
 #include "shape_creator.h"
+#include <stdexcept>
 
-#include <memory>
-#include <circle_factrory.h>
-#include <rectangle_factory.h>
-#include <triangle_factory.h>
-#include <polygon_factory.h>
+ShapeCreator::ShapeCreator(std::map<std::type_index, ShapeFactory*> factories)
+    : factories(std::move(factories)) {}
 
-ShapeCreator::ShapeCreator() {
-    initFactories();
-}
-
-void ShapeCreator::initFactories() {
-    factories[ShapeType::Circle] = std::make_unique<CircleFactory>();
-    factories[ShapeType::Rectangle] = std::make_unique<RectangleFactory>();
-    factories[ShapeType::Triangle] = std::make_unique<TriangleFactory>();
-    factories[ShapeType::Polygon] = std::make_unique<PolygonFactory>();
-}
-
-std::unique_ptr<Shape> ShapeCreator::creatShape(ShapeType type) {
+std::unique_ptr<Shape> ShapeCreator::creatShape(std::type_index type) {
     auto it = factories.find(type);
     if (it == factories.end())
         throw std::invalid_argument("unknown shape type");

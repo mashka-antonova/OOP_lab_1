@@ -3,7 +3,7 @@
 #include <cmath>
 #include <format>
 
-bool GeometryUtils::isBlank(const std::string& value){
+bool GeometryUtils::isBlank(const std::string& value){ //empty
     bool isBlank = true;
     for (unsigned char c : value){
         if (!std::isspace(c)){

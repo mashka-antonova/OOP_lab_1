@@ -11,6 +11,7 @@ SOURCES += \
         circle.cpp \
         circle_factrory.cpp \
         console_io.cpp \
+        dependency_provider.cpp \
         geometry_utils.cpp \
         main.cpp \
         polygon.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     circle.h \
     circle_factrory.h \
     console_io.h \
+    dependency_provider.h \
     geometry_utils.h \
     menu_action.h \
     polygon.h \
