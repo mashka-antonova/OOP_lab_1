@@ -4,7 +4,7 @@
 #include "console_io.h"
 #include "triangle.h"
 
-std::unique_ptr<Shape> TriangleFactory::creat() {
+std::unique_ptr<Shape> TriangleFactory::create() {
     std::string name = ConsoleIO::readString("Enter triangle name: ");
     Point p1 = ConsoleIO::readPoint("Point 1");
     Point p2 = ConsoleIO::readPoint("Point 2");

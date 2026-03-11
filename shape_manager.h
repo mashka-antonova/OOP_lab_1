@@ -8,7 +8,7 @@
 class ShapeManager {
 public:
     void addShape(std::unique_ptr<Shape> shape);
-    std::vector<std::string> buildPerameterList() const;
+    std::vector<std::string> buildParameterList() const;
     std::vector<std::string> buildPerimeterList() const;
     double calculateTotalPerimeter() const;
     void sortByPerimeter();

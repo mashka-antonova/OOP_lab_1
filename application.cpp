@@ -75,7 +75,7 @@ void Application::onAddShape() {
 }
 
 void Application::onPrintParameters() {
-    std::vector<std::string> list = shapeManager.buildPerameterList();
+    std::vector<std::string> list = shapeManager.buildParameterList();
     if (list.empty()) {
         ConsoleIO::printMessage("the collection is empty");
     } else {

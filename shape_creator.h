@@ -4,7 +4,6 @@
 #include <memory>
 #include <map>
 #include <shape.h>
-#include <shape_type.h>
 #include "shape_factory.h"
 #include <typeindex>
 

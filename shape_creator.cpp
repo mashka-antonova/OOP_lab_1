@@ -8,5 +8,5 @@ std::unique_ptr<Shape> ShapeCreator::creatShape(std::type_index type) {
     auto it = factories.find(type);
     if (it == factories.end())
         throw std::invalid_argument("unknown shape type");
-    return it->second->creat();
+    return it->second->create();
 }

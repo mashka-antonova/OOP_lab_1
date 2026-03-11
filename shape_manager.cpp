@@ -8,7 +8,7 @@ void ShapeManager::addShape(std::unique_ptr<Shape> shape) {
     shapes.push_back(std::move(shape));
 }
 
-std::vector<std::string> ShapeManager::buildPerameterList() const {
+std::vector<std::string> ShapeManager::buildParameterList() const {
     std::vector<std::string> lines;
     for (size_t i = 0; i < shapes.size(); i++)
         lines.push_back(std::format("{}) {} | {}",

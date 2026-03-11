@@ -5,7 +5,7 @@
 
 class TriangleFactory : public ShapeFactory {
 public:
-    std::unique_ptr<Shape> creat() override;
+    std::unique_ptr<Shape> create() override;
 };
 
 #endif // TRIANGLE_FACTORY_H

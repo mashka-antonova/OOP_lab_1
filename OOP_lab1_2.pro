@@ -45,6 +45,5 @@ HEADERS += \
     shape_creator.h \
     shape_factory.h \
     shape_manager.h \
-    shape_type.h \
     triangle.h \
     triangle_factory.h

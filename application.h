@@ -4,10 +4,9 @@
 #include <map>
 #include <functional>
 #include <typeindex>
-#include <typeinfo>
 #include "shape_manager.h"
-#include "shape_creator.h"
 #include "menu_action.h"
+#include "shape_creator.h"
 
 class Application {
 public:

@@ -4,7 +4,7 @@
 #include "console_io.h"
 #include "circle.h"
 
-std::unique_ptr<Shape> CircleFactory::creat() {
+std::unique_ptr<Shape> CircleFactory::create() {
     std::string name = ConsoleIO::readString("Enter circle name: ");
     Point center = ConsoleIO::readPoint("Center");
     double radius = ConsoleIO::readDouble("Radius: ");

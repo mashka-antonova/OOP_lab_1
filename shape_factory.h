@@ -7,7 +7,7 @@
 class ShapeFactory {
 public:
     virtual ~ShapeFactory() = default;
-    virtual std::unique_ptr<Shape> creat() = 0;
+    virtual std::unique_ptr<Shape> create() = 0;
 };
 
 #endif // SHAPE_FACTORY_H

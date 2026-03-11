@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <vector>
 
-std::unique_ptr<Shape> PolygonFactory::creat() {
+std::unique_ptr<Shape> PolygonFactory::create() {
     std::string name = ConsoleIO::readString("Enter polygon name: ");
     int peaksCount = ConsoleIO::readInt("Enter peaks count (>= 3): ");
     if (peaksCount < MIN_COUNT_OF_PEAKS)
