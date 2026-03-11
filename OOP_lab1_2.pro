@@ -9,7 +9,7 @@ CONFIG += c++20 cmdline
 SOURCES += \
         application.cpp \
         circle.cpp \
-        circle_factrory.cpp \
+        circle_factory.cpp \
         console_io.cpp \
         dependency_provider.cpp \
         geometry_utils.cpp \
@@ -32,7 +32,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     application.h \
     circle.h \
-    circle_factrory.h \
+    circle_factory.h \
     console_io.h \
     dependency_provider.h \
     geometry_utils.h \

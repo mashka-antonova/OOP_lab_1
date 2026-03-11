@@ -1,6 +1,6 @@
 #include "dependency_provider.h"
 #include "circle.h"
-#include "circle_factrory.h"
+#include "circle_factory.h"
 #include "rectangle.h"
 #include "rectangle_factory.h"
 #include "triangle.h"
@@ -21,7 +21,7 @@ void DependencyProvider::initFactories() {
 
 Application DependencyProvider::createApplication() {
     ShapeManager manager = createShapeManager();
-    ShapeCreator creator = creatShapeCreator();
+    ShapeCreator creator = createShapeCreator();
     return Application(std::move(manager), std::move(creator));
 }
 
@@ -29,7 +29,7 @@ ShapeManager DependencyProvider::createShapeManager() {
     return ShapeManager();
 }
 
-ShapeCreator DependencyProvider::creatShapeCreator() {
+ShapeCreator DependencyProvider::createShapeCreator() {
     std::map<std::type_index, ShapeFactory*> ptrMap;
     for (auto& [type, factory] : factories)
         ptrMap[type] = factory.get();

@@ -62,7 +62,7 @@ void Application::onAddShape() {
     auto it = menuToShapeType.find(typeChoice);
     if (it != menuToShapeType.end()) {
         try {
-            std::unique_ptr<Shape> shape = shapeCreator.creatShape(it->second);
+            std::unique_ptr<Shape> shape = shapeCreator.createShape(it->second);
             if (shape) {
                 shapeManager.addShape(std::move(shape));
                 ConsoleIO::printMessage("Shape added successfully");

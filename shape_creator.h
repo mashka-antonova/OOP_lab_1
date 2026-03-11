@@ -10,7 +10,7 @@
 class ShapeCreator {
 public:
     explicit ShapeCreator(std::map<std::type_index, ShapeFactory*> factories);
-    std::unique_ptr<Shape> creatShape(std::type_index type);
+    std::unique_ptr<Shape> createShape(std::type_index type);
 
 private:
     std::map<std::type_index, ShapeFactory*> factories;

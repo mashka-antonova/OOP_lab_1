@@ -15,7 +15,7 @@ public:
 private:
     void initFactories();
     ShapeManager createShapeManager();
-    ShapeCreator creatShapeCreator();
+    ShapeCreator createShapeCreator();
     std::map<std::type_index, std::unique_ptr<ShapeFactory>> factories;
 };
 
